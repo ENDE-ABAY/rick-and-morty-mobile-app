@@ -21,3 +21,29 @@ getAllCharachters() => gql(r"""
     }
   }
 """);
+String getAllCharacters() {
+  return '''
+    query GetAllCharacters(\$page: Int) {
+      characters(page: \$page) {
+        info {
+          next
+        }
+        results {
+          id
+          name
+          status
+          species
+          type
+          gender
+          origin {
+            name
+          }
+          location {
+            name
+          }
+          image
+        }
+      }
+    }
+  ''';
+}

@@ -13,12 +13,9 @@ class CharacterWidget extends StatelessWidget {
     // Clickable Widget
     return GestureDetector(
       onTap: () {
-        // print(character.name);
+        print(character.name);
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => DetailScreen(
-            id: character.id,
-            name: character.name,
-          ),
+          builder: (context) => DetailScreen(id: character.id, character: character,),
         ));
       },
       child: Container(

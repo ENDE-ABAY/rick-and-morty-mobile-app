@@ -10,6 +10,7 @@ class Character {
   final String name;
   final String status;
   final String location;
+  
   Character({
     required this.id,
     required this.gender,
@@ -65,8 +66,7 @@ class Character {
       image: map['image'] as String,
       name: map['name'] as String,
       status: map['status'] as String,
-      location:
-          map['location'] == null ? "" : map['location']['name'] as String,
+      location: map['location']?['name'] ?? '',
     );
   }
 
