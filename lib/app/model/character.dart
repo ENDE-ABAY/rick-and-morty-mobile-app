@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Character {
@@ -10,7 +9,8 @@ class Character {
   final String name;
   final String status;
   final String location;
-  
+  final String episode;
+
   Character({
     required this.id,
     required this.gender,
@@ -20,6 +20,7 @@ class Character {
     required this.name,
     required this.status,
     required this.location,
+    required this.episode,
   });
 
   Character copyWith({
@@ -31,6 +32,7 @@ class Character {
     String? name,
     String? status,
     String? location,
+    String? episode,
   }) {
     return Character(
       id: id ?? this.id,
@@ -41,6 +43,7 @@ class Character {
       name: name ?? this.name,
       status: status ?? this.status,
       location: location ?? this.location,
+      episode: episode ?? this.episode,
     );
   }
 
@@ -54,6 +57,7 @@ class Character {
       'name': name,
       'status': status,
       'location': location,
+      'episode': episode,
     };
   }
 
@@ -66,7 +70,12 @@ class Character {
       image: map['image'] as String,
       name: map['name'] as String,
       status: map['status'] as String,
-      location: map['location']?['name'] ?? '',
+      location: (map['location'] != null && map['location'] is Map)
+          ? map['location']['name'] as String
+          : '',
+      episode: (map['episode'] != null && map['episode'] is Map)
+          ? map['episode']['name'] as String
+          : '',
     );
   }
 
@@ -77,7 +86,7 @@ class Character {
 
   @override
   String toString() {
-    return 'Character(id: $id, gender: $gender, type: $type, species: $species, image: $image, name: $name, status: $status, location: $location)';
+    return 'Character(id: $id, gender: $gender, type: $type, species: $species, image: $image, name: $name, status: $status, location: $location, episode: $episode)';
   }
 
   @override
@@ -91,7 +100,8 @@ class Character {
         other.image == image &&
         other.name == name &&
         other.status == status &&
-        other.location == location;
+        other.location == location &&
+        other.episode == episode;
   }
 
   @override
@@ -103,6 +113,7 @@ class Character {
         image.hashCode ^
         name.hashCode ^
         status.hashCode ^
-        location.hashCode;
+        location.hashCode ^
+        episode.hashCode;
   }
 }

@@ -29,21 +29,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (nameFilter.isEmpty && locationFilter.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter a name or location to search")),
+        const SnackBar(
+            content: Text("Please enter a name or location to search")),
       );
       return;
     }
 
     List<Character> filteredCharacters = allCharacters.where((character) {
       bool matchesName = character.name.toLowerCase().contains(nameFilter);
-      bool matchesLocation = character.location.toLowerCase().contains(locationFilter);
+      bool matchesLocation =
+          character.location.toLowerCase().contains(locationFilter);
       return matchesName && matchesLocation;
     }).toList();
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SearchResultsScreen(displayedCharacters: filteredCharacters),
+        builder: (context) =>
+            SearchResultsScreen(displayedCharacters: filteredCharacters),
       ),
     );
   }
@@ -75,48 +78,51 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
-               children: [
-  Expanded(
-    child: TextField(
-      controller: _nameController,
-      decoration: const InputDecoration(
-        labelText: "Enter name",
-        labelStyle: TextStyle(fontSize: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(18.0)), // Rounded corners
-        ),
-      ),
-    ),
-  ),
-  const SizedBox(width: 8),
-  Expanded(
-    child: TextField(
-      controller: _locationController,
-      decoration: const InputDecoration(
-        labelText: "Enter location",
-        labelStyle: TextStyle(fontSize: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(18.0)), // Rounded corners
-        ),
-      ),
-    ),
-  ),
-  const SizedBox(width: 8),
-  ElevatedButton(
-    onPressed: () => _searchCharacters(context),
-    style: ElevatedButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0), // Adjust the value as needed
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-    ),
-    child: const Text(
-      "Search",
-      style: TextStyle(fontSize: 12), 
-    ),
-  ),
-],
-     ),
+                  children: [
+                    // Expanded(
+                    //   child: TextField(
+                    //     controller: _nameController,
+                    //     decoration: const InputDecoration(
+                    //       labelText: "Enter name",
+                    //       labelStyle: TextStyle(fontSize: 12),
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.all(Radius.circular(18.0)), // Rounded corners
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: _locationController,
+                        decoration: const InputDecoration(
+                          labelText: "Enter location",
+                          labelStyle: TextStyle(fontSize: 12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(18.0)), // Rounded corners
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () => _searchCharacters(context),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              18.0), // Adjust the value as needed
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24.0, vertical: 12.0),
+                      ),
+                      child: const Text(
+                        "Search",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               // GraphQL Query and Results
               Expanded(
@@ -130,9 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     // We have data
                     if (result.data != null) {
                       int? nextPage = 1;
-                      List<Character> fetchedCharacters = (result.data!["characters"]["results"] as List)
-                          .map((e) => Character.fromMap(e))
-                          .toList();
+                      List<Character> fetchedCharacters =
+                          (result.data!["characters"]["results"] as List)
+                              .map((e) => Character.fromMap(e))
+                              .toList();
 
                       nextPage = result.data!["characters"]["info"]["next"];
 
@@ -165,24 +172,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onPressed: () async {
                                     FetchMoreOptions opts = FetchMoreOptions(
                                       variables: {'page': nextPage},
-                                      updateQuery: (previousResultData, fetchMoreResultData) {
+                                      updateQuery: (previousResultData,
+                                          fetchMoreResultData) {
                                         final List<dynamic> repos = [
-                                          ...previousResultData!["characters"]["results"] as List<dynamic>,
-                                          ...fetchMoreResultData!["characters"]["results"] as List<dynamic>
+                                          ...previousResultData!["characters"]
+                                              ["results"] as List<dynamic>,
+                                          ...fetchMoreResultData!["characters"]
+                                              ["results"] as List<dynamic>
                                         ];
-                                        fetchMoreResultData["characters"]["results"] = repos;
+                                        fetchMoreResultData["characters"]
+                                            ["results"] = repos;
                                         return fetchMoreResultData;
                                       },
                                     );
                                     await fetchMore!(opts);
                                   },
                                   child: result.isLoading
-                                      ? const CircularProgressIndicator.adaptive()
+                                      ? const CircularProgressIndicator
+                                          .adaptive()
                                       : const Text("Load More"),
                                 ),
                             ],
                           ),
-                          ),
+                        ),
                       );
                     }
                     // We got data but it is null

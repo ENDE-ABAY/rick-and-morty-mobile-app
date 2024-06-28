@@ -17,6 +17,9 @@ getAllCharachters() => gql(r"""
         location{
           name
         }
+        episode{
+        name
+        }
       }
     }
   }
@@ -42,6 +45,9 @@ String getAllCharacters() {
             name
           }
           image
+          episode{
+          name
+          }
         }
       }
     }

@@ -15,7 +15,10 @@ class CharacterWidget extends StatelessWidget {
       onTap: () {
         print(character.name);
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => DetailScreen(id: character.id, character: character,),
+          builder: (context) => DetailScreen(
+            id: character.id,
+            character: character,
+          ),
         ));
       },
       child: Container(
@@ -114,6 +117,12 @@ class CharacterWidget extends StatelessWidget {
                   if (character.location.isNotEmpty)
                     IconAndLabel(
                       label: character.location,
+                      icon: Icons.pin_drop_outlined,
+                      flexible: true,
+                    ),
+                  if (character.episode.isNotEmpty)
+                    IconAndLabel(
+                      label: character.episode,
                       icon: Icons.pin_drop_outlined,
                       flexible: true,
                     ),
