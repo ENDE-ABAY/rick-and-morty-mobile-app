@@ -37,10 +37,17 @@ class DetailScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
-              Text(
-                'Status: ${character.status}',
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Status: ${character.status}',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(width: 5), // Add spacing between text and icon
+                  getIconByStatus(character.status),
+                ],
               ),
               const SizedBox(height: 10),
               Text(
@@ -83,5 +90,16 @@ class DetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget getIconByStatus(String status) {
+    switch (status.toLowerCase()) {
+      case 'alive':
+        return Icon(Icons.brightness_1, color: Colors.green, size: 16);
+      case 'dead':
+        return Icon(Icons.brightness_1, color: Colors.red, size: 16);
+      default:
+        return Icon(Icons.brightness_1, color: Colors.grey, size: 16);
+    }
   }
 }
